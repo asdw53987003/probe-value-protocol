@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "probe-value-protocol"
+version = "0.1.0"
+description = "Learner-independent protocol for evaluating probe vehicle data in real-time crash prediction"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.21", "pandas>=1.3", "scipy>=1.7", "scikit-learn>=1.0"]
+
+[project.optional-dependencies]
+lightgbm = ["lightgbm>=3.3"]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

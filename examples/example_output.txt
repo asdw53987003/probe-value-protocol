@@ -1,0 +1,59 @@
+Evaluation protocol (Algorithm 1)
+
+Reference data:
+        crashes  AUC_G  PRAUC_G  AUC_P  PRAUC_P  AUC_PG  PRAUC_PG  gain  gain_lo  gain_hi gain_verdict
+subset                                                                                                
+all          70  0.726    0.446  0.914    0.828   0.905     0.810 0.179    0.139    0.219  improvement
+c0           40  0.688    0.483  0.921    0.830   0.906     0.804 0.218    0.157    0.287  improvement
+c1           30  0.766    0.466  0.907    0.835   0.907     0.832 0.141    0.085    0.192  improvement
+
+Thinning (retrained models):
+   share subset  n_bar  AUC_P  AUC_PG  AUC_G  gain
+0  1.000     c0  6.667  0.921   0.906  0.688 0.218
+1  1.000     c1  5.978  0.907   0.907  0.766 0.141
+2  0.500     c0  3.261  0.888   0.879  0.688 0.191
+3  0.500     c1  3.033  0.858   0.872  0.766 0.106
+4  0.250     c0  1.608  0.848   0.863  0.688 0.175
+5  0.250     c1  1.496  0.801   0.837  0.766 0.071
+6  0.125     c0  0.872  0.790   0.811  0.688 0.123
+7  0.125     c1  0.759  0.753   0.825  0.766 0.058
+8  0.062     c0  0.456  0.714   0.767  0.688 0.079
+9  0.062     c1  0.415  0.699   0.786  0.766 0.019
+
+Sufficiency threshold c0 (40 crashes; observed range 2.30-8.67 vehicles per slice): eps 0.01: 2.33
+Sufficiency threshold c1 (30 crashes; observed range 2.33-7.33 vehicles per slice): eps 0.01: 2.67
+
+Degradation scenarios:
+           scenario subset  dAUC_P  dAUC_P_lo  dAUC_P_hi  gain  dgain  dgain_lo  dgain_hi
+0        random 20%    all   0.003     -0.004      0.010 0.183  0.004    -0.002     0.010
+1        random 20%     c0   0.006     -0.003      0.017 0.228  0.010    -0.001     0.022
+2        random 20%     c1  -0.002     -0.012      0.009 0.139 -0.002    -0.011     0.004
+3   bursts 76 s 20%    all  -0.003     -0.010      0.005 0.180  0.001    -0.007     0.008
+4   bursts 76 s 20%     c0  -0.002     -0.014      0.009 0.225  0.006    -0.007     0.018
+5   bursts 76 s 20%     c1  -0.003     -0.016      0.013 0.138 -0.003    -0.011     0.010
+6    last slice 20%    all  -0.002     -0.013      0.008 0.179  0.001    -0.012     0.015
+7    last slice 20%     c0   0.004     -0.013      0.024 0.228  0.010    -0.008     0.034
+8    last slice 20%     c1  -0.013     -0.023     -0.002 0.128 -0.013    -0.025    -0.000
+9   first slice 20%    all  -0.005     -0.020      0.013 0.176 -0.002    -0.016     0.013
+10  first slice 20%     c0  -0.021     -0.033     -0.009 0.197 -0.022    -0.037    -0.011
+11  first slice 20%     c1   0.015     -0.014      0.051 0.159  0.018    -0.004     0.046
+12      delay 2 min    all  -0.011     -0.032      0.006 0.173 -0.006    -0.042     0.023
+13      delay 2 min     c0  -0.024     -0.055      0.004 0.180 -0.038    -0.086     0.003
+14      delay 2 min     c1   0.004     -0.008      0.021 0.181  0.040    -0.005     0.088
+
+Channel values (Shapley, AUC scale):
+       target     model channel  value     lo    hi  total
+0   reference         P   state  0.152  0.128 0.178  0.414
+1   reference         P     lon  0.111  0.085 0.132  0.414
+2   reference         P     lat  0.150  0.127 0.177  0.414
+3   reference        PG   state  0.060  0.042 0.079  0.179
+4   reference        PG     lon  0.038  0.015 0.058  0.179
+5   reference        PG     lat  0.081  0.064 0.104  0.179
+6  share=0.25  P (loss)   state  0.037  0.020 0.056  0.063
+7  share=0.25  P (loss)     lon -0.002 -0.020 0.017  0.063
+8  share=0.25  P (loss)     lat  0.028  0.004 0.056  0.063
+
+Probe + Gantry detection at alarm thresholds from inner folds (90th percentile of control scores): 0.800
+
+Required penetration for n* = 2.33 (median over example unit-hours): day 0.027, night 0.070
+
